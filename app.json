@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "WhatsappDirect",
-    "slug": "WhatsappDirect",
+    "slug": "whatsappdirect",
+    "owner": "oo_mayr",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -28,6 +29,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e3fc511c-9bca-4ca8-99f9-26f929961d2a"
+      }
     }
   }
 }
