@@ -19,7 +19,6 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (number.length > 0) {
       Linking.openURL(`https://wa.me/${number}`);
-      setNumber('');
     } else {
       alert('Please enter a valid number');
     }
@@ -29,7 +28,6 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (number.length > 0) {
       navigation.navigate('SaveNumber', { number });
-      setNumber('');
     } else {
       alert('Please enter a valid number');
     }
@@ -44,15 +42,15 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         <TextInput
           value={number}
           style={styles.input}
-          placeholder='923321234567'
           keyboardType='numeric'
           onChangeText={(text) => setNumber(text)}
         />
+        <Text style={styles.text}>Example: 923321234567</Text>
         <View style={styles.buttonContainer}>
           <Button onPress={onChatHandler} title='Open Whatsapp' />
         </View>
         <View style={[styles.buttonContainer, { marginTop: '5%' }]}>
-          <Button onPress={onSaveHandler} title='Save Number' />
+          <Button onPress={onSaveHandler} title='Save' />
         </View>
         <Text style={styles.subText}>
           - Number should start with country code {'\n'}- Number should not
@@ -66,7 +64,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         }}
         style={styles.link}
       >
-        Go To Saved Numbers {'->'}
+        Go To Saved Numbers
       </Link>
     </KeyboardAvoidingView>
   );
@@ -100,7 +98,7 @@ const styles = StyleSheet.create({
     fontFamily: 'UbuntuRegular',
   },
   input: {
-    marginTop: '2%',
+    marginVertical: '2%',
     backgroundColor: 'transparent',
     paddingVertical: '3%',
     paddingHorizontal: '5%',

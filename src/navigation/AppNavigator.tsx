@@ -9,7 +9,12 @@ import SaveNumber from '../screens/SaveNumber';
 type RootStackParamList = {
   Home: undefined;
   SavedNumbers: undefined;
-  SaveNumber: { number: string };
+  SaveNumber: {
+    id?: string;
+    number: string;
+    name?: string;
+    screen?: string;
+  };
 };
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;

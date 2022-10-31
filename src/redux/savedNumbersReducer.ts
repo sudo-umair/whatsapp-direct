@@ -27,12 +27,21 @@ const savedNumbersSlice = createSlice({
         (number) => number.id !== action.payload
       );
     },
+    editNumber(state, action) {
+      const { id, name } = action.payload;
+      const numberToEdit = state.savedNumbers.find(
+        (number) => number.id === id
+      );
+      if (numberToEdit) {
+        numberToEdit.name = name;
+      }
+    },
     clearAllNumbers(state) {
       state.savedNumbers = [];
     },
   },
 });
 
-export const { addNumber, removeNumber, clearAllNumbers } =
+export const { addNumber, removeNumber, editNumber, clearAllNumbers } =
   savedNumbersSlice.actions;
 export default savedNumbersSlice.reducer;

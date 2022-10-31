@@ -1,14 +1,19 @@
 import { StyleSheet, Pressable } from 'react-native';
 import React from 'react';
-import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  FontAwesome,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from '@expo/vector-icons';
 
 import * as Haptics from 'expo-haptics';
 
 interface IconButtonProps {
   iconName:
     | React.ComponentProps<typeof FontAwesome>['name']
-    | React.ComponentProps<typeof MaterialCommunityIcons>['name'];
-  iconLibrary: 'FontAwesome' | 'MaterialCommunityIcons';
+    | React.ComponentProps<typeof MaterialCommunityIcons>['name']
+    | React.ComponentProps<typeof MaterialIcons>['name'];
+  iconLibrary: 'FontAwesome' | 'MaterialCommunityIcons' | 'MaterialIcons';
   onPress: () => void;
 }
 
@@ -21,6 +26,9 @@ const IconButton = ({ iconLibrary, iconName, onPress }: IconButtonProps) => {
       break;
     case 'MaterialCommunityIcons':
       DynamicIcon = MaterialCommunityIcons;
+      break;
+    case 'MaterialIcons':
+      DynamicIcon = MaterialIcons;
       break;
   }
 

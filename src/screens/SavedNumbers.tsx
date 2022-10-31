@@ -20,12 +20,21 @@ const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
   const numbers = useSelector((state: RootState) => state.savedNumbers);
   const dispatch = useDispatch<AppDispatch>();
 
-  const openWhatsApp = (number: string) => {
+  const openWhatsAppHandler = (number: string) => {
     Linking.openURL(`https://wa.me/${number}`);
   };
 
-  const deleteNumber = (id: string) => {
+  const deleteNumberHandler = (id: string) => {
     dispatch(removeNumber(id));
+  };
+
+  const editNumberHandler = (id: string, name: string, number: string) => {
+    navigation.navigate('SaveNumber', {
+      id,
+      name,
+      number,
+      screen: 'SavedNumbers',
+    });
   };
 
   const clearAll = () => {
@@ -42,14 +51,19 @@ const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
         </View>
         <View style={styles.actionsColumn}>
           <IconButton
+            iconLibrary='MaterialIcons'
+            iconName='edit'
+            onPress={() => editNumberHandler(item.id, item.name, item.number)}
+          />
+          <IconButton
             iconLibrary='FontAwesome'
             iconName='whatsapp'
-            onPress={openWhatsApp.bind(null, item.number)}
+            onPress={openWhatsAppHandler.bind(null, item.number)}
           />
           <IconButton
             iconLibrary='MaterialCommunityIcons'
             iconName='delete-outline'
-            onPress={deleteNumber.bind(null, item.id)}
+            onPress={deleteNumberHandler.bind(null, item.id)}
           />
         </View>
       </View>
@@ -67,6 +81,7 @@ const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
         data={numbers}
         renderItem={({ item }) => <RenderItem item={item} />}
         keyExtractor={(item) => item.id}
+        style={styles.listContainer}
       />
     </View>
   );
@@ -98,12 +113,13 @@ const styles = StyleSheet.create({
   container: {
     marginTop: '20%',
   },
+  listContainer: {
+    marginTop: '5%',
+  },
   itemContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    marginVertical: '4%',
     borderRadius: 10,
   },
   detailsColumn: {

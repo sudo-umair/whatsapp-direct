@@ -9,26 +9,31 @@ import {
 import React from 'react';
 import { SaveNumberProps } from '../navigation/AppNavigator';
 import { useDispatch } from 'react-redux';
-import { addNumber } from '../redux/savedNumbersReducer';
+import { addNumber, editNumber } from '../redux/savedNumbersReducer';
 import { AppDispatch } from '../redux/store';
+import * as Haptics from 'expo-haptics';
 
 export default function SaveNumber({ navigation, route }: SaveNumberProps) {
-  const { number } = route.params;
-  const [name, setName] = React.useState<string>('');
-
+  const { number, name, id, screen } = route.params;
+  const [nameInp, setNameInp] = React.useState<string>(name ?? '');
   const dispatch = useDispatch<AppDispatch>();
 
   const onSaveNumber = () => {
-    if (name === '') {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    if (nameInp === '') {
       alert('Please enter a name');
     } else {
-      dispatch(
-        addNumber({
-          id: Math.random().toString(),
-          name: name.trim(),
-          number: number.trim(),
-        })
-      );
+      if (screen === 'SavedNumbers') {
+        dispatch(editNumber({ id, name: nameInp.trim() }));
+      } else {
+        dispatch(
+          addNumber({
+            id: Math.random().toString(),
+            name: nameInp.trim(),
+            number: number.trim(),
+          })
+        );
+      }
       navigation.goBack();
     }
   };
@@ -39,12 +44,13 @@ export default function SaveNumber({ navigation, route }: SaveNumberProps) {
       <View style={styles.container}>
         <Text style={styles.text}>Enter Name for {number}</Text>
         <TextInput
-          value={name}
+          value={nameInp}
           style={styles.input}
-          placeholder='Enter Name'
-          onChangeText={(text) => setName(text)}
+          onChangeText={(text) => setNameInp(text)}
           keyboardType='default'
+          autoCapitalize='words'
         />
+        <Text style={styles.text}>Example: John Doe</Text>
         <View style={styles.buttonContainer}>
           <Button onPress={onSaveNumber} title='Save' />
         </View>
@@ -74,7 +80,7 @@ const styles = StyleSheet.create({
     fontFamily: 'UbuntuRegular',
   },
   input: {
-    marginTop: '2%',
+    marginVertical: '2%',
     backgroundColor: 'transparent',
     paddingVertical: '3%',
     paddingHorizontal: '5%',
