@@ -6,14 +6,30 @@ import {
   Button,
   Linking,
   KeyboardAvoidingView,
+  Pressable,
 } from 'react-native';
 import React from 'react';
 import { Link } from '@react-navigation/native';
 import { HomeScreenProps } from '../navigation/AppNavigator';
 import * as Haptics from 'expo-haptics';
+import IconButton from '../components/IconButton';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [number, setNumber] = React.useState<string>('');
+
+  const { colorScheme } = useSelector(
+    (state: RootState) => state.user.userSettings
+  );
+
+  const stylesExt = StyleSheet.create({
+    styleExt: {
+      color: colorScheme === 'dark' ? 'white' : 'black',
+      textDecorationColor: colorScheme === 'dark' ? 'white' : 'black',
+      borderColor: colorScheme === 'dark' ? 'white' : 'black',
+    },
+  });
 
   const onChatHandler = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -35,34 +51,46 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
 
   return (
     <KeyboardAvoidingView style={styles.rootContainer}>
-      <Text style={styles.title}>WhatsappDirect</Text>
-      <Text style={styles.subtitle}>Send messages directly to Whatsapp</Text>
+      <View style={styles.topIcon}>
+        <IconButton
+          iconLibrary='MaterialIcons'
+          iconName='settings'
+          onPress={() => navigation.navigate('Settings')}
+        />
+      </View>
+      <Text style={[styles.title, stylesExt.styleExt]}>WhatsappDirect</Text>
+      <Text style={[styles.subtitle, stylesExt.styleExt]}>
+        Send messages directly to Whatsapp
+      </Text>
       <View style={styles.container}>
-        <Text style={styles.text}>Enter Number Below</Text>
+        <Text style={[styles.text, stylesExt.styleExt]}>
+          Enter Number Below
+        </Text>
         <TextInput
           value={number}
-          style={styles.input}
+          style={[styles.input, stylesExt.styleExt]}
           keyboardType='numeric'
           onChangeText={(text) => setNumber(text)}
         />
-        <Text style={styles.text}>Example: 923321234567</Text>
+        <Text style={[styles.text, stylesExt.styleExt]}>
+          Example: 923321234567
+        </Text>
         <View style={styles.buttonContainer}>
           <Button onPress={onChatHandler} title='Open Whatsapp' />
         </View>
         <View style={[styles.buttonContainer, { marginTop: '5%' }]}>
           <Button onPress={onSaveHandler} title='Save' />
         </View>
-        <Text style={styles.subText}>
-          - Number should start with country code {'\n'}- Number should not
-          contain any special characters {'\n'}- Number should not contain any
-          spaces
+        <Text style={[styles.subText, stylesExt.styleExt]}>
+          Number should start with country code {'\n'}Number should not contain
+          any special characters {'\n'}Number should not contain any spaces
         </Text>
       </View>
       <Link
         to={{
           screen: 'SavedNumbers',
         }}
-        style={styles.link}
+        style={[styles.link, stylesExt.styleExt]}
       >
         Go To Saved Numbers
       </Link>
@@ -74,6 +102,14 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     padding: '5%',
+  },
+  topIcon: {
+    marginTop: '5%',
+    height: 50,
+    width: 50,
+    position: 'absolute',
+    top: 0,
+    right: 0,
   },
   title: {
     marginTop: '10%',
@@ -95,10 +131,10 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'UbuntuRegular',
+    fontFamily: 'UbuntuMedium',
   },
   input: {
-    marginVertical: '2%',
+    marginVertical: '1%',
     backgroundColor: 'transparent',
     paddingVertical: '3%',
     paddingHorizontal: '5%',
@@ -112,7 +148,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     color: 'white',
-    fontFamily: 'UbuntuRegular',
+    fontFamily: 'UbuntuMedium',
     fontSize: 12,
     marginTop: '10%',
     lineHeight: 20,

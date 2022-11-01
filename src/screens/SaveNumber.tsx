@@ -8,15 +8,27 @@ import {
 } from 'react-native';
 import React from 'react';
 import { SaveNumberProps } from '../navigation/AppNavigator';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addNumber, editNumber } from '../redux/savedNumbersReducer';
-import { AppDispatch } from '../redux/store';
+import { AppDispatch, RootState } from '../redux/store';
 import * as Haptics from 'expo-haptics';
 
 export default function SaveNumber({ navigation, route }: SaveNumberProps) {
   const { number, name, id, screen } = route.params;
   const [nameInp, setNameInp] = React.useState<string>(name ?? '');
   const dispatch = useDispatch<AppDispatch>();
+
+  const { colorScheme } = useSelector(
+    (state: RootState) => state.user.userSettings
+  );
+
+  const stylesExt = StyleSheet.create({
+    styleExt: {
+      color: colorScheme === 'dark' ? 'white' : 'black',
+      textDecorationColor: colorScheme === 'dark' ? 'white' : 'black',
+      borderColor: colorScheme === 'dark' ? 'white' : 'black',
+    },
+  });
 
   const onSaveNumber = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -40,17 +52,19 @@ export default function SaveNumber({ navigation, route }: SaveNumberProps) {
 
   return (
     <KeyboardAvoidingView style={styles.rootContainer}>
-      <Text style={styles.title}>Save Number</Text>
+      <Text style={[styles.title, stylesExt.styleExt]}>Save Number</Text>
       <View style={styles.container}>
-        <Text style={styles.text}>Enter Name for {number}</Text>
+        <Text style={[styles.text, stylesExt.styleExt]}>
+          Enter Name for {number}
+        </Text>
         <TextInput
           value={nameInp}
-          style={styles.input}
+          style={[styles.input, stylesExt.styleExt]}
           onChangeText={(text) => setNameInp(text)}
           keyboardType='default'
           autoCapitalize='words'
         />
-        <Text style={styles.text}>Example: John Doe</Text>
+        <Text style={[styles.text, stylesExt.styleExt]}>Example: John Doe</Text>
         <View style={styles.buttonContainer}>
           <Button onPress={onSaveNumber} title='Save' />
         </View>
@@ -77,10 +91,10 @@ const styles = StyleSheet.create({
   text: {
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'UbuntuRegular',
+    fontFamily: 'UbuntuMedium',
   },
   input: {
-    marginVertical: '2%',
+    marginVertical: '1%',
     backgroundColor: 'transparent',
     paddingVertical: '3%',
     paddingHorizontal: '5%',

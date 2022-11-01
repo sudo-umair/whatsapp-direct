@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect } from 'react';
 import AppNavigator from './src/navigation/AppNavigator';
-import { ImageBackground } from 'react-native';
 import { Provider } from 'react-redux';
 import { store, persistor } from './src/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -14,6 +13,8 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     UbuntuRegular: require('./assets/Fonts/Ubuntu-Regular.ttf'),
     UbuntuItalic: require('./assets/Fonts/Ubuntu-Italic.ttf'),
+    UbuntuMedium: require('./assets/Fonts/Ubuntu-Medium.ttf'),
+    UbuntuMediumItalic: require('./assets/Fonts/Ubuntu-MediumItalic.ttf'),
   });
 
   useEffect(() => {
@@ -37,14 +38,8 @@ export default function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaView style={styles.rootContainer} onLayout={onLayoutRootView}>
-          <ImageBackground
-            source={require('./assets/wallpaper.png')}
-            style={styles.rootContainer}
-            resizeMode='cover'
-          >
-            <AppNavigator />
-            <StatusBar style='light' backgroundColor='black' />
-          </ImageBackground>
+          <AppNavigator />
+          <StatusBar style='light' backgroundColor='black' />
         </SafeAreaView>
       </PersistGate>
     </Provider>

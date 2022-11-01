@@ -1,43 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit';
-import SavedNumbers from '../screens/SavedNumbers';
 
-type SavedNumbers = {
+type SavedNumberItem = {
   id: string;
   name: string;
   number: string;
 };
 
-export type SavedNumbersState = {
-  savedNumbers: SavedNumbers[];
-};
-
-const initialState: SavedNumbersState = {
-  savedNumbers: [],
-};
+const initialState: SavedNumberItem[] = [];
 
 const savedNumbersSlice = createSlice({
   name: 'savedNumbers',
   initialState: initialState,
   reducers: {
     addNumber(state, action) {
-      state.savedNumbers.push(action.payload);
+      state.push(action.payload);
     },
     removeNumber(state, action) {
-      state.savedNumbers = state.savedNumbers.filter(
-        (number) => number.id !== action.payload
-      );
+      return state.filter((item) => item.id !== action.payload);
     },
     editNumber(state, action) {
       const { id, name } = action.payload;
-      const numberToEdit = state.savedNumbers.find(
-        (number) => number.id === id
-      );
+      const numberToEdit = state.find((number) => number.id === id);
       if (numberToEdit) {
         numberToEdit.name = name;
       }
     },
     clearAllNumbers(state) {
-      state.savedNumbers = [];
+      return initialState;
     },
   },
 });

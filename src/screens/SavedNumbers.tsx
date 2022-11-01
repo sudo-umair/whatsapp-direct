@@ -17,8 +17,20 @@ interface RenderItemProps {
 }
 
 const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
-  const numbers = useSelector((state: RootState) => state.savedNumbers);
+  const { savedNumbers } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
+
+  const { colorScheme } = useSelector(
+    (state: RootState) => state.user.userSettings
+  );
+
+  const stylesExt = StyleSheet.create({
+    styleExt: {
+      color: colorScheme === 'dark' ? 'white' : 'black',
+      textDecorationColor: colorScheme === 'dark' ? 'white' : 'black',
+      borderColor: colorScheme === 'dark' ? 'white' : 'black',
+    },
+  });
 
   const openWhatsAppHandler = (number: string) => {
     Linking.openURL(`https://wa.me/${number}`);
@@ -44,10 +56,12 @@ const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
 
   const RenderItem = ({ item }: RenderItemProps) => {
     return (
-      <View style={styles.itemContainer}>
+      <View style={[styles.itemContainer, stylesExt.styleExt]}>
         <View style={styles.detailsColumn}>
-          <Text style={styles.itemText}>{item.name}</Text>
-          <Text style={styles.itemText}>{item.number}</Text>
+          <Text style={[styles.itemText, stylesExt.styleExt]}>{item.name}</Text>
+          <Text style={[styles.itemText, stylesExt.styleExt]}>
+            {item.number}
+          </Text>
         </View>
         <View style={styles.actionsColumn}>
           <IconButton
@@ -71,14 +85,14 @@ const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
   };
   return (
     <View style={styles.rootContainer}>
-      <Text style={styles.title}>Saved Numbers</Text>
-      {numbers.length > 0 && (
+      <Text style={[styles.title, stylesExt.styleExt]}>Saved Numbers</Text>
+      {savedNumbers.length > 0 && (
         <Text onPress={clearAll} style={styles.subtitle}>
           Clear All
         </Text>
       )}
       <FlatList
-        data={numbers}
+        data={savedNumbers}
         renderItem={({ item }) => <RenderItem item={item} />}
         keyExtractor={(item) => item.id}
         style={styles.listContainer}

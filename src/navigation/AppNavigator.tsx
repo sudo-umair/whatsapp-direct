@@ -5,6 +5,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import SavedNumbers from '../screens/SavedNumbers';
 import SaveNumber from '../screens/SaveNumber';
+import Settings from '../screens/Settings';
+import { ImageBackground, StyleSheet } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+
+const WallpaperDark = require('../../assets/Wallpapers/wallpaperDark.png');
+const WallpaperLight = require('../../assets/Wallpapers/wallpaperLight.jpeg');
 
 type RootStackParamList = {
   Home: undefined;
@@ -15,6 +22,7 @@ type RootStackParamList = {
     name?: string;
     screen?: string;
   };
+  Settings: undefined;
 };
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
@@ -28,23 +36,42 @@ export type { HomeScreenProps, SavedNumbersProps, SaveNumberProps };
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
+  const { colorScheme } = useSelector(
+    (state: RootState) => state.user.userSettings
+  );
+
+  const isDarkEnabled = colorScheme === 'dark';
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          contentStyle: {
-            backgroundColor: 'transparent',
-          },
-          animation: 'slide_from_right',
-        }}
-      >
-        <Stack.Screen name='Home' component={HomeScreen} />
-        <Stack.Screen name='SaveNumber' component={SaveNumber} />
-        <Stack.Screen name='SavedNumbers' component={SavedNumbers} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ImageBackground
+      source={isDarkEnabled ? WallpaperDark : WallpaperLight}
+      style={styles.rootContainer}
+      resizeMode='cover'
+    >
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            contentStyle: {
+              backgroundColor: 'transparent',
+            },
+            animation: 'slide_from_right',
+          }}
+        >
+          <Stack.Screen name='Home' component={HomeScreen} />
+          <Stack.Screen name='SaveNumber' component={SaveNumber} />
+          <Stack.Screen name='SavedNumbers' component={SavedNumbers} />
+          <Stack.Screen name='Settings' component={Settings} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </ImageBackground>
   );
 };
 
 export default AppNavigator;
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+  },
+});
