@@ -87,7 +87,7 @@ const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
     <View style={styles.rootContainer}>
       <Text style={[styles.title, stylesExt.styleExt]}>Saved Numbers</Text>
       {savedNumbers.length > 0 && (
-        <Text onPress={clearAll} style={styles.subtitle}>
+        <Text onPress={clearAll} style={[styles.subtitle, stylesExt.styleExt]}>
           Clear All
         </Text>
       )}
