@@ -6,7 +6,6 @@ import {
   Button,
   Linking,
   KeyboardAvoidingView,
-  Pressable,
 } from 'react-native';
 import React from 'react';
 import { Link } from '@react-navigation/native';

@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -39,7 +38,6 @@ export default function App() {
       <PersistGate loading={null} persistor={persistor}>
         <SafeAreaView style={styles.rootContainer} onLayout={onLayoutRootView}>
           <AppNavigator />
-          <StatusBar style='light' backgroundColor='black' />
         </SafeAreaView>
       </PersistGate>
     </Provider>

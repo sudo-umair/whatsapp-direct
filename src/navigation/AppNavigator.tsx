@@ -6,9 +6,10 @@ import HomeScreen from '../screens/HomeScreen';
 import SavedNumbers from '../screens/SavedNumbers';
 import SaveNumber from '../screens/SaveNumber';
 import Settings from '../screens/Settings';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { Dimensions, ImageBackground, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { StatusBar } from 'expo-status-bar';
 
 const WallpaperDark = require('../../assets/Wallpapers/wallpaperDark.png');
 const WallpaperLight = require('../../assets/Wallpapers/wallpaperLight.jpeg');
@@ -43,28 +44,35 @@ const AppNavigator = () => {
   const isDarkEnabled = colorScheme === 'dark';
 
   return (
-    <ImageBackground
-      source={isDarkEnabled ? WallpaperDark : WallpaperLight}
-      style={styles.rootContainer}
-      resizeMode='cover'
-    >
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-            contentStyle: {
-              backgroundColor: 'transparent',
-            },
-            animation: 'slide_from_right',
-          }}
-        >
-          <Stack.Screen name='Home' component={HomeScreen} />
-          <Stack.Screen name='SaveNumber' component={SaveNumber} />
-          <Stack.Screen name='SavedNumbers' component={SavedNumbers} />
-          <Stack.Screen name='Settings' component={Settings} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ImageBackground>
+    <>
+      <ImageBackground
+        source={isDarkEnabled ? WallpaperDark : WallpaperLight}
+        style={styles.rootContainer}
+        resizeMode='cover'
+      >
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false,
+              contentStyle: {
+                backgroundColor: 'transparent',
+              },
+              animation: 'slide_from_right',
+              navigationBarColor: colorScheme === 'dark' ? 'black' : 'white',
+            }}
+          >
+            <Stack.Screen name='Home' component={HomeScreen} />
+            <Stack.Screen name='SaveNumber' component={SaveNumber} />
+            <Stack.Screen name='SavedNumbers' component={SavedNumbers} />
+            <Stack.Screen name='Settings' component={Settings} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ImageBackground>
+      <StatusBar
+        style={colorScheme === 'dark' ? 'light' : 'dark'}
+        backgroundColor={colorScheme === 'dark' ? 'black' : 'white'}
+      />
+    </>
   );
 };
 
@@ -73,5 +81,7 @@ export default AppNavigator;
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
   },
 });
