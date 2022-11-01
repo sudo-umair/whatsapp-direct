@@ -1,6 +1,15 @@
 {
   "name": "whatsappdirect",
-  "version": "1.0.0",
+  "description": "WhatsApp Direct",
+  "version": "1.1.0",
+  "author": {
+    "name": "Muhammad Umair",
+    "url": "https://github.com/sudo-umair"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sudo-umair/WhatsappDirect"
+  },
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
