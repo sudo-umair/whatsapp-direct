@@ -40,7 +40,7 @@ const Settings = () => {
         <View style={styles.settingRow}>
           <Text style={[styles.settingItem, stylesExt.text]}>Dark Mode</Text>
           <Switch
-            trackColor={{ false: 'red', true: 'blue' }}
+            trackColor={{ false: 'red', true: '#008565' }}
             thumbColor='#f4f3f4'
             ios_backgroundColor='#3e3e3e'
             onValueChange={toggleDarkMode}

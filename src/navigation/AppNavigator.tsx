@@ -58,7 +58,7 @@ const AppNavigator = () => {
                 backgroundColor: 'transparent',
               },
               animation: 'slide_from_right',
-              navigationBarColor: colorScheme === 'dark' ? 'black' : 'white',
+              navigationBarColor: colorScheme === 'dark' ? 'black' : '#008565',
             }}
           >
             <Stack.Screen name='Home' component={HomeScreen} />
@@ -69,8 +69,8 @@ const AppNavigator = () => {
         </NavigationContainer>
       </ImageBackground>
       <StatusBar
-        style={colorScheme === 'dark' ? 'light' : 'dark'}
-        backgroundColor={colorScheme === 'dark' ? 'black' : 'white'}
+        style='light'
+        backgroundColor={colorScheme === 'dark' ? 'black' : '#008565'}
       />
     </>
   );

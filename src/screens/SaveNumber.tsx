@@ -66,7 +66,7 @@ export default function SaveNumber({ navigation, route }: SaveNumberProps) {
         />
         <Text style={[styles.text, stylesExt.styleExt]}>Example: John Doe</Text>
         <View style={styles.buttonContainer}>
-          <Button onPress={onSaveNumber} title='Save' />
+          <Button onPress={onSaveNumber} title='Save' color='#008565' />
         </View>
       </View>
     </KeyboardAvoidingView>

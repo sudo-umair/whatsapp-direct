@@ -75,10 +75,14 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           Example: 923321234567
         </Text>
         <View style={styles.buttonContainer}>
-          <Button onPress={onChatHandler} title='Open Whatsapp' />
+          <Button
+            onPress={onChatHandler}
+            title='Open Whatsapp'
+            color='#008565'
+          />
         </View>
         <View style={[styles.buttonContainer, { marginTop: '5%' }]}>
-          <Button onPress={onSaveHandler} title='Save' />
+          <Button onPress={onSaveHandler} title='Save' color='#008565' />
         </View>
         <Text style={[styles.subText, stylesExt.styleExt]}>
           Number should start with country code {'\n'}Number should not contain
