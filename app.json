@@ -3,7 +3,7 @@
     "name": "WhatsappDirect",
     "slug": "whatsappdirect",
     "owner": "oo_mayr",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
