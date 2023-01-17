@@ -11,8 +11,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { StatusBar } from 'expo-status-bar';
 
-const WallpaperDark = require('../../assets/Wallpapers/wallpaperDark.png');
-const WallpaperLight = require('../../assets/Wallpapers/wallpaperLight.jpeg');
+import WallpaperDark from '../../assets/Wallpapers/wallpaperDark.png';
+import WallpaperLight from '../../assets/Wallpapers/wallpaperLight.jpeg';
 
 type RootStackParamList = {
   Home: undefined;
