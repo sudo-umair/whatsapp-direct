@@ -7,6 +7,7 @@ import AppNavigator from './src/navigation/AppNavigator';
 import { Provider } from 'react-redux';
 import { store, persistor } from './src/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import React from 'react';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
