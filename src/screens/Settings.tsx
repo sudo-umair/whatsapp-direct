@@ -3,6 +3,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleMode } from '../redux/userReducer';
 import { RootState, AppDispatch } from '../redux/store';
+import { stylesExt } from '../utils/styles';
 
 const Settings = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,20 +26,20 @@ const Settings = () => {
     }
   };
 
-  const stylesExt = StyleSheet.create({
-    text: {
-      color: colorScheme === 'dark' ? 'white' : 'black',
-      textDecorationColor: colorScheme === 'dark' ? 'white' : 'black',
-      borderColor: colorScheme === 'dark' ? 'white' : 'black',
-    },
-  });
+  const customStyles = () => {
+    if (colorScheme === 'dark') {
+      return stylesExt.dark;
+    } else {
+      return stylesExt.light;
+    }
+  };
 
   return (
     <View style={styles.rootContainer}>
-      <Text style={[styles.title, stylesExt.text]}>Settings</Text>
+      <Text style={[styles.title, customStyles()]}>Settings</Text>
       <View style={styles.container}>
         <View style={styles.settingRow}>
-          <Text style={[styles.settingItem, stylesExt.text]}>Dark Mode</Text>
+          <Text style={[styles.settingItem, customStyles()]}>Dark Mode</Text>
           <Switch
             trackColor={{ false: 'red', true: '#008565' }}
             thumbColor='#f4f3f4'
@@ -49,7 +50,7 @@ const Settings = () => {
         </View>
       </View>
       <View style={styles.bottomContainer}>
-        <Text style={[styles.DEV_INFO_TEXT, stylesExt.text]}>
+        <Text style={[styles.DEV_INFO_TEXT, customStyles()]}>
           Developed by: Muhammad Umair
           {'\n'}
           Github: @sudo-umair

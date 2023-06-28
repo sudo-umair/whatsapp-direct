@@ -5,7 +5,6 @@ import {
   TextInput,
   Button,
   Linking,
-  KeyboardAvoidingView,
 } from 'react-native';
 import React from 'react';
 import { Link } from '@react-navigation/native';
@@ -14,6 +13,7 @@ import * as Haptics from 'expo-haptics';
 import IconButton from '../components/IconButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { stylesExt } from '../utils/styles';
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [number, setNumber] = React.useState<string>('');
@@ -22,20 +22,20 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     (state: RootState) => state.user.userSettings
   );
 
-  const stylesExt = StyleSheet.create({
-    styleExt: {
-      color: colorScheme === 'dark' ? 'white' : 'black',
-      textDecorationColor: colorScheme === 'dark' ? 'white' : 'black',
-      borderColor: colorScheme === 'dark' ? 'white' : 'black',
-    },
-  });
-
   const onChatHandler = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     if (number.length > 0) {
       Linking.openURL(`https://wa.me/${number}`);
     } else {
       alert('Please enter a valid number');
+    }
+  };
+
+  const customStyles = () => {
+    if (colorScheme === 'dark') {
+      return stylesExt.dark;
+    } else {
+      return stylesExt.light;
     }
   };
 
@@ -49,7 +49,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.rootContainer}>
+    <View style={styles.rootContainer}>
       <View style={styles.topIcon}>
         <IconButton
           iconLibrary='MaterialIcons'
@@ -57,23 +57,19 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           onPress={() => navigation.navigate('Settings')}
         />
       </View>
-      <Text style={[styles.title, stylesExt.styleExt]}>WhatsappDirect</Text>
-      <Text style={[styles.subtitle, stylesExt.styleExt]}>
+      <Text style={[styles.title]}>WhatsappDirect</Text>
+      <Text style={[styles.subtitle, customStyles()]}>
         Send messages directly to Whatsapp
       </Text>
       <View style={styles.container}>
-        <Text style={[styles.text, stylesExt.styleExt]}>
-          Enter Number Below
-        </Text>
+        <Text style={[styles.text, customStyles()]}>Enter Number Below</Text>
         <TextInput
           value={number}
-          style={[styles.input, stylesExt.styleExt]}
+          style={[styles.input, customStyles()]}
           keyboardType='numeric'
           onChangeText={(text) => setNumber(text)}
         />
-        <Text style={[styles.text, stylesExt.styleExt]}>
-          Example: 923321234567
-        </Text>
+        <Text style={[styles.text, customStyles()]}>Example: 923321234567</Text>
         <View style={styles.buttonContainer}>
           <Button
             onPress={onChatHandler}
@@ -84,7 +80,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         <View style={[styles.buttonContainer, { marginTop: '5%' }]}>
           <Button onPress={onSaveHandler} title='Save' color='#008565' />
         </View>
-        <Text style={[styles.subText, stylesExt.styleExt]}>
+        <Text style={[styles.subText, customStyles()]}>
           Number should start with country code {'\n'}Number should not contain
           any special characters {'\n'}Number should not contain any spaces
         </Text>
@@ -93,11 +89,11 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         to={{
           screen: 'SavedNumbers',
         }}
-        style={[styles.link, stylesExt.styleExt]}
+        style={[styles.link, customStyles()]}
       >
         Go To Saved Numbers
       </Link>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 

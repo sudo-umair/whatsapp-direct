@@ -1,17 +1,11 @@
-import {
-  Button,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import React from 'react';
 import { SaveNumberProps } from '../navigation/AppNavigator';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNumber, editNumber } from '../redux/savedNumbersReducer';
 import { AppDispatch, RootState } from '../redux/store';
 import * as Haptics from 'expo-haptics';
+import { stylesExt } from '../utils/styles';
 
 export default function SaveNumber({ navigation, route }: SaveNumberProps) {
   const { number, name, id, screen } = route.params;
@@ -22,13 +16,13 @@ export default function SaveNumber({ navigation, route }: SaveNumberProps) {
     (state: RootState) => state.user.userSettings
   );
 
-  const stylesExt = StyleSheet.create({
-    styleExt: {
-      color: colorScheme === 'dark' ? 'white' : 'black',
-      textDecorationColor: colorScheme === 'dark' ? 'white' : 'black',
-      borderColor: colorScheme === 'dark' ? 'white' : 'black',
-    },
-  });
+  const customStyles = () => {
+    if (colorScheme === 'dark') {
+      return stylesExt.dark;
+    } else {
+      return stylesExt.light;
+    }
+  };
 
   const onSaveNumber = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -51,25 +45,25 @@ export default function SaveNumber({ navigation, route }: SaveNumberProps) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.rootContainer}>
-      <Text style={[styles.title, stylesExt.styleExt]}>Save Number</Text>
+    <View style={styles.rootContainer}>
+      <Text style={[styles.title, customStyles()]}>Save Number</Text>
       <View style={styles.container}>
-        <Text style={[styles.text, stylesExt.styleExt]}>
+        <Text style={[styles.text, customStyles()]}>
           Enter Name for {number}
         </Text>
         <TextInput
           value={nameInp}
-          style={[styles.input, stylesExt.styleExt]}
+          style={[styles.input, customStyles()]}
           onChangeText={(text) => setNameInp(text)}
           keyboardType='default'
           autoCapitalize='words'
         />
-        <Text style={[styles.text, stylesExt.styleExt]}>Example: John Doe</Text>
+        <Text style={[styles.text, customStyles()]}>Example: John Doe</Text>
         <View style={styles.buttonContainer}>
           <Button onPress={onSaveNumber} title='Save' color='#008565' />
         </View>
       </View>
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
