@@ -1,4 +1,4 @@
-Users can open chat directly on WhatsApp against any number without saving it first in their contacts. Users can also save those contacts in the app as a shortcut but this Is optional. App also has Dark Mode support.
+Users can open chat directly on WhatsApp with any contact without saving it first in the contacts. Users can also save those contacts in the app as a shortcut but this is optional. The app also has Dark Mode support.
 
 ## Screenshots
 
