@@ -15,7 +15,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -24,7 +26,8 @@
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.oo_mayr.whatsappdirect"
+      "package": "com.oo_mayr.whatsappdirect",
+      "versionCode": 6
     },
     "web": {
       "favicon": "./assets/favicon.png"
