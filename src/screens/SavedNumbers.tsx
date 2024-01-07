@@ -1,5 +1,5 @@
 import { View, Text, FlatList, StyleSheet, Linking } from 'react-native';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import IconButton from '../components/IconButton';
@@ -7,7 +7,7 @@ import { removeNumber, clearAllNumbers } from '../redux/savedNumbersReducer';
 import { AppDispatch } from '../redux/store';
 import { SavedNumbersProps } from '../navigation/AppNavigator';
 import * as Haptics from 'expo-haptics';
-import { stylesExt } from '../utils/styles';
+import { getTheme } from '../utils/styles';
 
 interface RenderItemProps {
   item: {
@@ -18,12 +18,10 @@ interface RenderItemProps {
 }
 
 const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
-  const { savedNumbers } = useSelector((state: RootState) => state);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { colorScheme } = useSelector(
-    (state: RootState) => state.user.userSettings
-  );
+  const colorScheme = useSelector((state: RootState) => state.user.userSettings.colorScheme);
+  const savedNumbers = useSelector((state: RootState) => state.savedNumbers);
 
   const openWhatsAppHandler = (number: string) => {
     Linking.openURL(`https://wa.me/${number}`);
@@ -47,20 +45,14 @@ const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
     dispatch(clearAllNumbers());
   };
 
-  const customStyles = () => {
-    if (colorScheme === 'dark') {
-      return stylesExt.dark;
-    } else {
-      return stylesExt.light;
-    }
-  };
+  const theme = useMemo(() => getTheme(colorScheme), [colorScheme]);
 
   const RenderItem = ({ item }: RenderItemProps) => {
     return (
-      <View style={[styles.itemContainer, customStyles()]}>
+      <View style={[styles.itemContainer, theme]}>
         <View style={styles.detailsColumn}>
-          <Text style={[styles.itemText, customStyles()]}>{item.name}</Text>
-          <Text style={[styles.itemText, customStyles()]}>{item.number}</Text>
+          <Text style={[styles.itemText, theme]}>{item.name}</Text>
+          <Text style={[styles.itemText, theme]}>{item.number}</Text>
         </View>
         <View style={styles.actionsColumn}>
           <IconButton
@@ -84,9 +76,9 @@ const SavedNumbers = ({ route, navigation }: SavedNumbersProps) => {
   };
   return (
     <View style={styles.rootContainer}>
-      <Text style={[styles.title, customStyles()]}>Saved Numbers</Text>
+      <Text style={[styles.title, theme]}>Saved Numbers</Text>
       {savedNumbers.length > 0 && (
-        <Text onPress={clearAll} style={[styles.subtitle, customStyles()]}>
+        <Text onPress={clearAll} style={[styles.subtitle, theme]}>
           Clear All
         </Text>
       )}

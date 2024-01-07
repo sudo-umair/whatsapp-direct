@@ -1,45 +1,29 @@
 import { View, Text, StyleSheet, Switch } from 'react-native';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleMode } from '../redux/userReducer';
 import { RootState, AppDispatch } from '../redux/store';
-import { stylesExt } from '../utils/styles';
+import { getTheme } from '../utils/styles';
 
 const Settings = () => {
+  const colorScheme = useSelector((state: RootState) => state.user.userSettings.colorScheme);
+
+  const isDarkEnabled = useMemo(() => colorScheme === 'dark', [colorScheme]);
+
   const dispatch = useDispatch<AppDispatch>();
 
-  const { colorScheme } = useSelector(
-    (state: RootState) => state.user.userSettings
-  );
-
-  const [isDarkEnabled, setIsDarkEnabled] = React.useState(
-    colorScheme === 'dark'
-  );
-
   const toggleDarkMode = () => {
-    if (isDarkEnabled) {
-      setIsDarkEnabled(false);
-      dispatch(toggleMode('light'));
-    } else {
-      setIsDarkEnabled(true);
-      dispatch(toggleMode('dark'));
-    }
+    dispatch(toggleMode(isDarkEnabled ? 'light' : 'dark'));
   };
 
-  const customStyles = () => {
-    if (colorScheme === 'dark') {
-      return stylesExt.dark;
-    } else {
-      return stylesExt.light;
-    }
-  };
+  const theme = useMemo(() => getTheme(colorScheme), [colorScheme]);
 
   return (
     <View style={styles.rootContainer}>
-      <Text style={[styles.title, customStyles()]}>Settings</Text>
+      <Text style={[styles.title, theme]}>Settings</Text>
       <View style={styles.container}>
         <View style={styles.settingRow}>
-          <Text style={[styles.settingItem, customStyles()]}>Dark Mode</Text>
+          <Text style={[styles.settingItem, theme]}>Dark Mode</Text>
           <Switch
             trackColor={{ false: 'red', true: '#008565' }}
             thumbColor='#f4f3f4'
@@ -50,7 +34,7 @@ const Settings = () => {
         </View>
       </View>
       <View style={styles.bottomContainer}>
-        <Text style={[styles.DEV_INFO_TEXT, customStyles()]}>
+        <Text style={[styles.DEV_INFO_TEXT, theme]}>
           Developed by: Muhammad Umair
           {'\n'}
           Github: @sudo-umair

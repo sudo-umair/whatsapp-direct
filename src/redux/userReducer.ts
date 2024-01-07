@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-type userSettings = {
+export type userSettings = {
   colorScheme: 'light' | 'dark';
 };
 

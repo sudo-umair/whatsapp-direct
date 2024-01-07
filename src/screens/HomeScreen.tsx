@@ -1,26 +1,17 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Button,
-  Linking,
-} from 'react-native';
-import React from 'react';
+import { View, Text, StyleSheet, TextInput, Button, Linking } from 'react-native';
+import React, { useMemo } from 'react';
 import { Link } from '@react-navigation/native';
 import { HomeScreenProps } from '../navigation/AppNavigator';
 import * as Haptics from 'expo-haptics';
 import IconButton from '../components/IconButton';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { stylesExt } from '../utils/styles';
+import { getTheme } from '../utils/styles';
 
 export default function HomeScreen({ navigation, route }: HomeScreenProps) {
   const [number, setNumber] = React.useState<string>('');
 
-  const { colorScheme } = useSelector(
-    (state: RootState) => state.user.userSettings
-  );
+  const colorScheme = useSelector((state: RootState) => state.user.userSettings.colorScheme);
 
   const onChatHandler = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -28,14 +19,6 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
       Linking.openURL(`https://wa.me/${number}`);
     } else {
       alert('Please enter a valid number');
-    }
-  };
-
-  const customStyles = () => {
-    if (colorScheme === 'dark') {
-      return stylesExt.dark;
-    } else {
-      return stylesExt.light;
     }
   };
 
@@ -48,49 +31,36 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     }
   };
 
+  const theme = useMemo(() => getTheme(colorScheme), [colorScheme]);
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.topIcon}>
-        <IconButton
-          iconLibrary='MaterialIcons'
-          iconName='settings'
-          onPress={() => navigation.navigate('Settings')}
-        />
+        <IconButton iconLibrary='MaterialIcons' iconName='settings' onPress={() => navigation.navigate('Settings')} />
       </View>
       <Text style={[styles.title]}>WhatsappDirect</Text>
-      <Text style={[styles.subtitle, customStyles()]}>
-        Send messages directly to Whatsapp
-      </Text>
+      <Text style={[styles.subtitle, theme]}>Send messages directly to Whatsapp</Text>
       <View style={styles.container}>
-        <Text style={[styles.text, customStyles()]}>Enter Number Below</Text>
+        <Text style={[styles.text, theme]}>Enter Number Below</Text>
         <TextInput
           value={number}
-          style={[styles.input, customStyles()]}
+          style={[styles.input, theme]}
           keyboardType='numeric'
           onChangeText={(text) => setNumber(text)}
         />
-        <Text style={[styles.text, customStyles()]}>Example: 923321234567</Text>
+        <Text style={[styles.text, theme]}>Example: 923321234567</Text>
         <View style={styles.buttonContainer}>
-          <Button
-            onPress={onChatHandler}
-            title='Open Whatsapp'
-            color='#008565'
-          />
+          <Button onPress={onChatHandler} title='Open Whatsapp' color='#008565' />
         </View>
         <View style={[styles.buttonContainer, { marginTop: '5%' }]}>
           <Button onPress={onSaveHandler} title='Save' color='#008565' />
         </View>
-        <Text style={[styles.subText, customStyles()]}>
-          Number should start with country code {'\n'}Number should not contain
-          any special characters {'\n'}Number should not contain any spaces
+        <Text style={[styles.subText, theme]}>
+          Number should start with country code {'\n'}Number should not contain any special characters {'\n'}Number
+          should not contain any spaces
         </Text>
       </View>
-      <Link
-        to={{
-          screen: 'SavedNumbers',
-        }}
-        style={[styles.link, customStyles()]}
-      >
+      <Link to={{ screen: 'SavedNumbers' }} style={[styles.link, theme]}>
         Go To Saved Numbers
       </Link>
     </View>
@@ -135,8 +105,8 @@ const styles = StyleSheet.create({
   input: {
     marginVertical: '1%',
     backgroundColor: 'transparent',
-    paddingVertical: '3%',
-    paddingHorizontal: '5%',
+    paddingVertical: '2%',
+    paddingHorizontal: '4%',
     borderRadius: 20,
     fontSize: 20,
     textAlign: 'left',

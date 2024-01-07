@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { userSettings } from '../redux/userReducer';
 
-export const stylesExt = StyleSheet.create({
+const stylesExt = StyleSheet.create({
   dark: {
     color: 'white',
     textDecorationColor: 'white',
@@ -12,3 +13,11 @@ export const stylesExt = StyleSheet.create({
     borderColor: 'black',
   },
 });
+
+export const getTheme = (colorScheme: userSettings['colorScheme']) => {
+  if (colorScheme === 'dark') {
+    return stylesExt.dark;
+  } else {
+    return stylesExt.light;
+  }
+};
