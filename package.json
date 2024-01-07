@@ -15,7 +15,11 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build-android-apk": "eas build -p android --profile buildApk",
+    "build-android-apk-local": "eas build -p android --profile buildApk --local",
+    "build-android-release": "eas build -p android --profile production",
+    "build-android-release-local": "eas build -p android --profile production --local"
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
