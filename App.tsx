@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './src/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import React from 'react';
+import * as Updates from 'expo-updates';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -22,6 +23,39 @@ export default function App() {
       await SplashScreen.preventAutoHideAsync();
     }
     prepare();
+  }, []);
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          Alert.alert(
+            'Update available',
+            'An update is available. Do you want to update?',
+            [
+              {
+                text: 'No',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+              },
+              {
+                text: 'Yes',
+                onPress: async () => {
+                  await Updates.fetchUpdateAsync();
+                  await Updates.reloadAsync();
+                },
+                style: 'default',
+                isPreferred: true,
+              },
+            ],
+            { cancelable: false }
+          );
+        }
+      } catch (error) {
+        alert(`Error fetching latest Expo update: ${error}`);
+      }
+    })();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
