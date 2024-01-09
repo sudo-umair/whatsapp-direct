@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
       <View style={styles.topIcon}>
         <IconButton iconLibrary='MaterialIcons' iconName='settings' onPress={() => navigation.navigate('Settings')} />
       </View>
-      <Text style={[styles.title]}>WhatsappDirect</Text>
+      <Text style={[styles.title, theme]}>WhatsappDirect</Text>
       <Text style={[styles.subtitle, theme]}>Send messages directly to Whatsapp</Text>
       <View style={styles.container}>
         <Text style={[styles.text, theme]}>Enter Number Below</Text>
