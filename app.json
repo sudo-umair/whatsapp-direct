@@ -16,7 +16,9 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/e3fc511c-9bca-4ca8-99f9-26f929961d2a"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -26,7 +28,7 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.oo_mayr.whatsappdirect",
-      "versionCode": 9
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -39,6 +41,8 @@
     "runtimeVersion": {
       "policy": "appVersion"
     },
-    "plugins": ["expo-font"]
+    "plugins": [
+      "expo-font"
+    ]
   }
 }
