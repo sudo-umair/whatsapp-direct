@@ -18,3 +18,5 @@ web-build/
 *.aab
 *.ipa
 *.keystore
+
+.java-version
