@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, TextInput, Button, Linking } from 'react-native';
 import React, { useMemo } from 'react';
-import { Link } from '@react-navigation/native';
 import { HomeScreenProps } from '../navigation/AppNavigator';
 import * as Haptics from 'expo-haptics';
 import IconButton from '../components/IconButton';
@@ -48,9 +47,6 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
           should not contain any spaces
         </Text>
       </View>
-      <Link to={{ screen: 'SavedNumbers' }} style={[styles.link, theme]}>
-        Go To Saved Numbers
-      </Link>
     </View>
   );
 }
