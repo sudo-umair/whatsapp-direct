@@ -3,8 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
-import SavedNumbers from '../screens/SavedNumbers';
-import SaveNumber from '../screens/SaveNumber';
 import Settings from '../screens/Settings';
 import { Dimensions, ImageBackground, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
@@ -16,30 +14,15 @@ import WallpaperLight from '../../assets/Wallpapers/wallpaperLight.jpeg';
 
 type RootStackParamList = {
   Home: undefined;
-  SavedNumbers: undefined;
-  SaveNumber: {
-    id?: string;
-    number: string;
-    name?: string;
-    screen?: string;
-  };
   Settings: undefined;
 };
 
-type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
-type SaveNumberProps = NativeStackScreenProps<RootStackParamList, 'SaveNumber'>;
-type SavedNumbersProps = NativeStackScreenProps<
-  RootStackParamList,
-  'SavedNumbers'
->;
-export type { HomeScreenProps, SavedNumbersProps, SaveNumberProps };
+export type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const AppNavigator = () => {
-  const { colorScheme } = useSelector(
-    (state: RootState) => state.user.userSettings
-  );
+  const { colorScheme } = useSelector((state: RootState) => state.user.userSettings);
 
   const isDarkEnabled = colorScheme === 'dark';
 
@@ -62,16 +45,11 @@ const AppNavigator = () => {
             }}
           >
             <Stack.Screen name='Home' component={HomeScreen} />
-            <Stack.Screen name='SaveNumber' component={SaveNumber} />
-            <Stack.Screen name='SavedNumbers' component={SavedNumbers} />
             <Stack.Screen name='Settings' component={Settings} />
           </Stack.Navigator>
         </NavigationContainer>
       </ImageBackground>
-      <StatusBar
-        style='light'
-        backgroundColor={colorScheme === 'dark' ? 'black' : '#008565'}
-      />
+      <StatusBar style='light' backgroundColor={colorScheme === 'dark' ? 'black' : '#008565'} />
     </>
   );
 };

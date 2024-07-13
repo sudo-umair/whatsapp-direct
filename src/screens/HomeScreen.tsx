@@ -22,15 +22,6 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
     }
   };
 
-  const onSaveHandler = () => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    if (number.length > 0) {
-      navigation.navigate('SaveNumber', { number });
-    } else {
-      alert('Please enter a valid number');
-    }
-  };
-
   const theme = useMemo(() => getTheme(colorScheme), [colorScheme]);
 
   return (
@@ -51,9 +42,6 @@ export default function HomeScreen({ navigation, route }: HomeScreenProps) {
         <Text style={[styles.text, theme]}>Example: 923321234567</Text>
         <View style={styles.buttonContainer}>
           <Button onPress={onChatHandler} title='Open Whatsapp' color='#008565' />
-        </View>
-        <View style={[styles.buttonContainer, { marginTop: '5%' }]}>
-          <Button onPress={onSaveHandler} title='Save' color='#008565' />
         </View>
         <Text style={[styles.subText, theme]}>
           Number should start with country code {'\n'}Number should not contain any special characters {'\n'}Number

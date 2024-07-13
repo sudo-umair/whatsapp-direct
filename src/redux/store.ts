@@ -1,6 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import savedNumbersReducer from './savedNumbersReducer';
 import userReducer from './userReducer';
 import { persistStore, persistReducer } from 'redux-persist';
 
@@ -14,7 +13,6 @@ const persistedReducer = persistReducer(
   persistConfig,
   combineReducers({
     user: userReducer,
-    savedNumbers: savedNumbersReducer,
   })
 );
 
