@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toggleMode } from '../redux/userReducer';
 import { RootState, AppDispatch } from '../redux/store';
 import { getTheme } from '../utils/styles';
+import { Linking } from 'react-native';
 
 const Settings = () => {
   const colorScheme = useSelector((state: RootState) => state.user.userSettings.colorScheme);
@@ -14,6 +15,10 @@ const Settings = () => {
 
   const toggleDarkMode = () => {
     dispatch(toggleMode(isDarkEnabled ? 'light' : 'dark'));
+  };
+
+  const openGithub = () => {
+    Linking.openURL('https://github.com/sudo-umair');
   };
 
   const theme = useMemo(() => getTheme(colorScheme), [colorScheme]);
@@ -34,9 +39,8 @@ const Settings = () => {
         </View>
       </View>
       <View style={styles.bottomContainer}>
-        <Text style={[styles.DEV_INFO_TEXT, theme]}>
-          Developed by: Muhammad Umair
-          {'\n'}
+        <Text style={[styles.DEV_INFO_TEXT, theme]}>Developed by: Muhammad Umair</Text>
+        <Text onPress={openGithub} style={[styles.DEV_INFO_TEXT, theme, styles.link]}>
           Github: @sudo-umair
         </Text>
       </View>
@@ -85,5 +89,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     lineHeight: 20,
+  },
+  link: {
+    textDecorationLine: 'underline',
   },
 });
